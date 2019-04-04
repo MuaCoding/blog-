@@ -1,0 +1,43 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "Koa2 + MongoDB 搭建博客系统",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "jest --forceExit",
+    "commit": "git cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XiaoMingLi/blog-.git"
+  },
+  "keywords": [
+    "tutorial",
+    "nodejs",
+    "koa2",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/XiaoMingLi/blog-/issues"
+  },
+  "homepage": "https://github.com/XiaoMingLi/blog-#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.5",
+    "supertest": "^3.1.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "koa-static": "^4.0.2",
+    "koa-views": "^6.1.4",
+    "marked": "^0.4.0",
+    "mongoose": "^5.1.2",
+    "nunjucks": "^3.1.2"
+  }
+}
