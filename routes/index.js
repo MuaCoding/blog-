@@ -22,14 +22,14 @@ async function isAdmin(ctx, next) {
 
 
 module.exports = (app) => {
-  router.get('/', require('./posts').index)
+  // router.get('/', require('./posts').index)
   router.get('/', require('./home').index)
-  router.get('/about', require('./about').index)
+  // router.get('/about', require('./about').index)
 
-  router.get('/signup', require('./user').signup)
-  router.post('/signup', require('./user').signup)
-  router.get('/signin', require('./user').signin)
-  router.post('/signin', require('./user').signin)
+  // router.get('/signup', require('./user').signup)
+  // router.post('/signup', require('./user').signup)
+  // router.get('/signin', require('./user').signin)
+  // router.post('/signin', require('./user').signin)
 
   app
     .use(router.routes())
