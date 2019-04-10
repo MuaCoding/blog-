@@ -83,7 +83,7 @@ module.exports = {
       return ctx.redirect('back')
     }
   },
-
+  //退出登录
   signout(ctx, next) {
     ctx.session.user = null
     ctx.flash = {warning: '退出登录'}
