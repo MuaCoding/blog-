@@ -28,8 +28,8 @@ module.exports = (app) => {
 
   router.get('/signup', require('./user').signup)
   router.post('/signup', require('./user').signup)
-  // router.get('/signin', require('./user').signin)
-  // router.post('/signin', require('./user').signin)
+  router.get('/signin', require('./user').signin)
+  router.post('/signin', require('./user').signin)
 
   app
     .use(router.routes())
