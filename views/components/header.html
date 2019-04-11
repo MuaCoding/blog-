@@ -21,7 +21,7 @@
         {% endif %}
         {% if ctx.session.user %}
         <div class="navbar-item">
-          <a class="button is-small is-primary" href="/posts/new">写文章</a>
+          <a class="button is-small is-primary" href="/posts/create">写文章</a>
         </div>
         <div class="navbar-item">
           <a href="/user/{{ctx.session.user.name}}">{{ctx.session.user.name}}</a>

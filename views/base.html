@@ -8,9 +8,91 @@
   <meta name="keywords" content="javascript之禅, javascript, react, angular, nodejs, front-end, frameworks"/>
   <meta name="description" content="起于JS而不止于JS">
   <meta name="author" content="Li XiaoMing">
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
   <link href="https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/html" href="/public/app.css">
+  <link rel="stylesheet" href="/assets/app.css">
+  <style>
+    .sign-box {
+      max-width: 400px;
+      margin: 80px auto;
+    }
+
+    #editor {
+      height: calc(100vh - 104px);
+    }
+
+    #editor .input,
+    #editor .show {
+      display: inline-block;
+      width: 49%;
+      height: 100%;
+      vertical-align: top;
+      box-sizing: border-box;
+      padding: 15px 20px;
+    }
+
+    #editor .input {
+      border: none;
+      border-right: 1px solid #ccc;
+      resize: none;
+      outline: none;
+      border-radius: 0;
+      background-color: #f6f6f6;
+      font-size: 14px;
+      font-family: 'Monaco', courier, monospace;
+      padding: 20px;
+    }
+
+    #editor .show {
+      overflow-y: auto;
+    }
+
+    .editor-header {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 0 0 #f5f5f5
+    }
+
+    .editor-header input {
+      flex: 1 1 auto;;
+      border: 0;
+      font-size: 22px;
+    }
+
+    .editor-header input::-webkit-input-placeholder {
+      font-size: 22px;
+    }
+
+    .editor-header .right-box {
+      margin-left: 200px;
+      justify-content: flex-end;
+      padding: 0 20px;
+      display: flex;
+    }
+
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .notifications {
+      position: fixed;
+      top: 60px;
+      width: 300px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .comment:hover .is-invisible {
+      visibility: visible !important;
+    }
+
+    .page-404 {
+      height: 100vh;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
 {% include "views/components/notification.html" %}
@@ -18,7 +100,7 @@
 <div>No body</div>
 {% endblock %}
 {# include "./components/footer.html" #}
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
   $(function () {
     if ($('.notifications')) {

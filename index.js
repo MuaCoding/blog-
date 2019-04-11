@@ -10,14 +10,23 @@ const flash = require('./middlewares/flash')
 const router = require('./routes')
 const CONFIG = require('./config/config')
 
-const app = new Koa();
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  // sanitize: false,
+  smartLists: true,
+  smartypants: false
+})
+
+const app = module.exports = new Koa();
 
 // router(app)
 mongoose.connect(CONFIG.mongodb)
 
 app.keys = ['blog']
-
-app.use(bodyParser())
 
 app.use(session({
   key: CONFIG.session.key,
@@ -27,11 +36,11 @@ app.use(session({
 app.use(flash())
 
 app.use(serve(
-  path.join(__dirname, 'public')
+  path.join(__dirname, 'assets')
 ))
 
 app.use(views(path.join(__dirname, 'views'), {
-  map: { html: 'nunjucks' }
+  map: {html: 'nunjucks'}
 }))
 
 app.use(async (ctx, next) => {
@@ -40,7 +49,10 @@ app.use(async (ctx, next) => {
   await next()
 })
 
+app.use(bodyParser())
 router(app)
+
+console.info(app)
 
 if (!module.parent) app.listen(CONFIG.port)
 console.log(`server is running at http://localhost:${CONFIG.port}`)
