@@ -39,6 +39,14 @@ module.exports = (app) => {
   router.post('/posts/:id/edit', isLoginUser, require('./posts').edit)
   router.get('/posts/:id/delete', isLoginUser, require('./posts').delete)
 
+  router.post('/comments/create', isLoginUser, require('./comments').create)
+  router.get('/comments/:id/delete', isLoginUser, require('./comments').delete)
+
+  router.get('/category', isAdmin, require('./category').list)
+  router.get('/category/create', require('./category').create)
+  router.post('/category/create', require('./category').create)
+  router.get('/category/:id/delete', isAdmin, require('./category').delete)
+
   app
     .use(router.routes())
     .use(router.allowedMethods())

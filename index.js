@@ -16,7 +16,7 @@ marked.setOptions({
   tables: true,
   breaks: false,
   pedantic: false,
-  // sanitize: false,
+  sanitize: true,
   smartLists: true,
   smartypants: false
 })
@@ -36,7 +36,7 @@ app.use(session({
 app.use(flash())
 
 app.use(serve(
-  path.join(__dirname, 'assets')
+  path.resolve(__dirname, './assets')
 ))
 
 app.use(views(path.join(__dirname, 'views'), {
@@ -52,7 +52,6 @@ app.use(async (ctx, next) => {
 app.use(bodyParser())
 router(app)
 
-console.info(app)
 
 if (!module.parent) app.listen(CONFIG.port)
 console.log(`server is running at http://localhost:${CONFIG.port}`)

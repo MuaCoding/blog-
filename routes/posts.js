@@ -4,11 +4,38 @@ const CategoryModel = require('../models/category')
 
 module.exports = {
   async index(ctx, next) {
-    const pageSize = 5
+    const pageSize = 15
     const currentPage = parseInt(ctx.query.page) || 1
+
+    // 分类名
     const cname = ctx.query.c
     let cid
+    if (cname) {
+      // 查询分类id
+      const cateogry = await CategoryModel.findOne({ name: cname })
+      cid = cateogry._id
+    }
+    // 根据是否有分类来控制查询语句
+    const query = cid ? { category: cid } : {}
 
+    const allPostsCount = await PostModel.count()
+    const pageCount = Math.ceil(allPostsCount / pageSize)
+    const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
+    const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
+    const posts = await PostModel.find({}).skip((currentPage - 1) * pageSize).limit(pageSize)
+    const baseUrl = cname ? `${ctx.path}?c=${cname}&page=` : `${ctx.path}?page=`
+
+    await ctx.render('index', {
+      title: 'JS',
+      posts,
+      pageSize,
+      currentPage,
+      allPostsCount,
+      pageCount,
+      pageStart,
+      pageEnd,
+      baseUrl
+    })
   },
 
   //创建文章
@@ -31,6 +58,7 @@ module.exports = {
       errMsg = '内容不可为空'
     }
     const res = await PostModel.create(post)
+
     ctx.flash = {success: '发表文章成功'}
     ctx.redirect(`/posts/${res._id}`)
   },
@@ -50,13 +78,14 @@ module.exports = {
     // if (!post) {
     //   ctx.throw(404, '此主题不存在或已被删除')
     // }
-    // const comments = await CommentModel.find({ postId })
-    //   .populate({ path: 'from', select: 'name' })
+    //查找评论
+    const comments = await CommentModel.find({postId: ctx.params.id})
+      .populate({path: 'from', select: 'name'})
 
     await ctx.render('post', {
       title: post.title,
       post,
-      // comments
+      comments
     })
   },
 
@@ -88,7 +117,7 @@ module.exports = {
   },
 
   // 删除文章
-  async delete (ctx,next){
+  async delete(ctx, next) {
     const postId = ctx.params.id
     const post = await PostModel.findById(postId)
 
@@ -99,7 +128,7 @@ module.exports = {
       throw new Error('没有权限')
     }
     await PostModel.findByIdAndRemove(postId)
-    ctx.flash = { success: '删除文章成功' }
+    ctx.flash = {success: '删除文章成功'}
     ctx.redirect('/')
   }
 }
